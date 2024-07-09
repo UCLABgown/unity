@@ -10,7 +10,7 @@ public class ChoiceScenario : MonoBehaviour
     public int scenarioCount = 0;
     [Serializable]
     public struct Scenario{
-        public int num;
+        public string num;
         public Scene nowScene;
    }
 
@@ -23,6 +23,7 @@ public class ChoiceScenario : MonoBehaviour
     private bool prevAniOver = false;
     public Animator anim;
     public Animator animMouse;
+    public bool animMouseDisable = true;
     public int startCount = 0;
     public int nextCount = 0;
     public AudioSource audio;
@@ -41,17 +42,17 @@ public class ChoiceScenario : MonoBehaviour
     }
     public void FreezAni(){
         anim.speed = 0;
-        animMouse.speed = 0;
+        if(!animMouseDisable) animMouse.speed = 0;
         audio.Stop();
     }
     public void HeatAni(){
         anim.speed = 1;
-        animMouse.speed = 1;
+        if (!animMouseDisable)  animMouse.speed = 1;
         audio.Play();
     }
     public void RunAni(string name, int num){
         anim.SetInteger(name,num);
-        animMouse.SetInteger(name,num);
+        if (!animMouseDisable) animMouse.SetInteger(name,num);
     }
 
     void Start(){
