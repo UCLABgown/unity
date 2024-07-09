@@ -9,7 +9,6 @@ public class AnimationGrabVer2 : MonoBehaviour
 {
 
     public Rigidbody holdHand;
-    public GameObject hold;
     public bool ishold;
     private bool holdstop = false;
     private bool savehold;
@@ -23,7 +22,6 @@ public class AnimationGrabVer2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        hold =  GameObject.Find("IndexFinger1_L");
     }
 
     void OnTriggerEnter(Collider other) {
@@ -41,11 +39,11 @@ public class AnimationGrabVer2 : MonoBehaviour
         }
     }
     void FreezAni(){
-        GameObject g = GameObject.Find("1_1_prefix");
-        g.GetComponent<RunAnimationSound>().FreezAni();
+        GameObject g = GameObject.Find("Pose_2_pointing_re");
+        g.GetComponent<ChoiceScenario>().FreezAni();
     }
         void HeatAni(){
-        GameObject g = GameObject.Find("1_1_prefix");
+        GameObject g = GameObject.Find("Pose_2_pointing_re");
         g.GetComponent<RunAnimationSound>().HeatAni();
     }
     // Update is called once per frame
@@ -54,8 +52,8 @@ public class AnimationGrabVer2 : MonoBehaviour
 
         if(savehold != ishold){
                 if(ishold){
-                    transform.position = hold.transform.position + addPosition;
-                    transform.rotation = hold.transform.rotation * addRotate;
+                    transform.position = holdHand.transform.position + addPosition;
+                    transform.rotation = holdHand.transform.rotation * addRotate;
                     Joint j = this.AddComponent<FixedJoint>();
                     j.connectedBody = holdHand;
                     j.breakForce = Mathf.Infinity;
@@ -78,8 +76,8 @@ public class AnimationGrabVer2 : MonoBehaviour
             }
         }
         if(isFreez){
-            transform.position = hold.transform.position + addPosition;
-            transform.rotation = hold.transform.rotation * addRotate;
+            transform.position = holdHand.transform.position + addPosition;
+            transform.rotation = holdHand.transform.rotation * addRotate;
         }
         
         savehold = ishold;

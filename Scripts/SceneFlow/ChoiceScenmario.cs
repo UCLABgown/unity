@@ -39,6 +39,16 @@ public class ChoiceScenario : MonoBehaviour
     public void StopAudio(){
         audio.Stop();
     }
+    public void FreezAni(){
+        anim.speed = 0;
+        animMouse.speed = 0;
+        audio.Stop();
+    }
+    public void HeatAni(){
+        anim.speed = 1;
+        animMouse.speed = 1;
+        audio.Play();
+    }
     public void RunAni(string name, int num){
         anim.SetInteger(name,num);
         animMouse.SetInteger(name,num);
