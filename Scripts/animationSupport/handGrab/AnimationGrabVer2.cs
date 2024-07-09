@@ -18,6 +18,7 @@ public class AnimationGrabVer2 : MonoBehaviour
     public Vector3 addPosition;
     public Quaternion addRotate;
     private bool isPrevFreez = false;
+    public string sceneControllName = "Pose_2_pointing_re";
 
     // Start is called before the first frame update
     void Start()
@@ -39,11 +40,11 @@ public class AnimationGrabVer2 : MonoBehaviour
         }
     }
     void FreezAni(){
-        GameObject g = GameObject.Find("Pose_2_pointing_re");
+        GameObject g = GameObject.Find(sceneControllName);
         g.GetComponent<ChoiceScenario>().FreezAni();
     }
         void HeatAni(){
-        GameObject g = GameObject.Find("Pose_2_pointing_re");
+        GameObject g = GameObject.Find(sceneControllName);
         g.GetComponent<RunAnimationSound>().HeatAni();
     }
     // Update is called once per frame
