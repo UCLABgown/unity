@@ -20,6 +20,7 @@ public class ChoiceScenario : MonoBehaviour
     public Scenario[] scenarioFlowArr;
     public string centerName = "cross";
     public bool aniOver;
+    private bool prevAniOver = false;
     public Animator anim;
     public Animator animMouse;
     public int startCount = 0;
@@ -100,10 +101,16 @@ public class ChoiceScenario : MonoBehaviour
 
     }
     void Update(){
-        time += Time.deltaTime;
+        if(aniOver && !prevAniOver){
+            if(ConditionChekcs()){
+                RunAni("next",++nextCount);
+                RunAni("start",0);
+                RunScene();
+                isRun = false;
+            }
 
+        }
         if(time >0.5){
-            if(aniOver) isRun =true; 
             string name = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
             if(name != prevName){
                 if(name.Contains(centerName)){
@@ -112,19 +119,12 @@ public class ChoiceScenario : MonoBehaviour
                     nextCount = 0;
                 }
             }
-                if(isRun){
-                    if(ConditionChekcs()){
-                    RunAni("next",++nextCount);
-                    RunAni("start",0);
-                    RunScene();
-                    isRun = false;
-                    }
-
-                }
-            
             time = 0;
-            prevName = name;
         }
+        time += Time.deltaTime;
+    
+        prevName = name;
+        prevAniOver = aniOver;
     }
 
 }
