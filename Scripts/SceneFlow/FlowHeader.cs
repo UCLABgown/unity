@@ -48,6 +48,7 @@ public class FlowHeader : MonoBehaviour
         prevActivity = activity;
 
         time= time + Time.deltaTime;
+        /*
         if(time > 1){
             time = 0;
             // 물체의 현재 위치
@@ -69,5 +70,6 @@ public class FlowHeader : MonoBehaviour
                 this.transform.position = movePosition;
             }
         }
+        */
     }
 }

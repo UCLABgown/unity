@@ -83,14 +83,17 @@ public class ChoiceScenario : MonoBehaviour
     }
     bool ConditionChekcs(){
         bool chk = false;
-        int count = scenarioFlowArr[startCount-1].nowScene.Count;
-        if(nextCount <=0 || (count < nextCount))
-            return true;
-        Scene.Scenario s = scenarioFlowArr[startCount-1].nowScene.FlowArr[nextCount-1];
-        foreach(ConditionClass c in s.condition)
+        int count  = 0;
+        if(startCount != 0) count = scenarioFlowArr[startCount-1].nowScene.Count;
+        else return false;
+        Scene.Scenario s;
+        if(nextCount <=0 || (count < nextCount)) ;
+        else{
+            s = scenarioFlowArr[startCount-1].nowScene.FlowArr[nextCount-1];
+        foreach(ConditionClass c in s.condition){
             chk = chk || ConditionCheck(c);
-        if(s.condition.Length == 0 )
-         chk = true;
+        }
+        } 
         return chk;
 
     }
@@ -113,16 +116,20 @@ public class ChoiceScenario : MonoBehaviour
     }
     void Update(){
         if(aniOver && !prevAniOver){
+                RunAni("next",++nextCount);
+                RunAni("start",0);
+                RunScene();
+                isRun = false;
+
+        }
+        if(time >0.5){
+            string name = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
             if(ConditionChekcs()){
                 RunAni("next",++nextCount);
                 RunAni("start",0);
                 RunScene();
                 isRun = false;
             }
-
-        }
-        if(time >0.5){
-            string name = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
             if(name != prevName){
                 if(name.Contains(centerName)){
                     RunAni("start",++startCount);

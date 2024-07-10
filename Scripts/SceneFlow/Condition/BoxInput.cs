@@ -15,6 +15,7 @@ public class BoxInput : ConditionClass
                     SetType(t);
                     AddCount();
                     f.SetState(false);
+                    print("들어감");
                 }
                 f.SetActivity(false);
 
