@@ -14,7 +14,8 @@ public class AnimationGrabVer2 : MonoBehaviour
     private bool savehold;
     private int dragInt;
     public bool isTouch=true;
-    public bool isFreez = false;
+    private bool isFreez = false;
+    public bool isAutoFreez = false;
     public Vector3 addPosition;
     public Quaternion addRotate;
     private bool isPrevFreez = false;
@@ -45,7 +46,7 @@ public class AnimationGrabVer2 : MonoBehaviour
     }
         void HeatAni(){
         GameObject g = GameObject.Find(sceneControllName);
-        g.GetComponent<RunAnimationSound>().HeatAni();
+        g.GetComponent<ChoiceScenario>().HeatAni();
     }
     // Update is called once per frame
     void Update()
@@ -53,9 +54,10 @@ public class AnimationGrabVer2 : MonoBehaviour
 
         if(savehold != ishold){
                 if(ishold){
+                    if(isAutoFreez) isFreez = true;
                     transform.position = holdHand.transform.position + addPosition;
-                    transform.rotation = holdHand.transform.rotation * addRotate;
-                    Joint j = this.AddComponent<FixedJoint>();
+                    transform.rotation = holdHand.transform.rotation * addRotate;                    
+                Joint j = this.AddComponent<FixedJoint>();
                     j.connectedBody = holdHand;
                     j.breakForce = Mathf.Infinity;
 
@@ -79,6 +81,7 @@ public class AnimationGrabVer2 : MonoBehaviour
         if(isFreez){
             transform.position = holdHand.transform.position + addPosition;
             transform.rotation = holdHand.transform.rotation * addRotate;
+            
         }
         
         savehold = ishold;
@@ -89,6 +92,7 @@ public class AnimationGrabVer2 : MonoBehaviour
         if(!isFreez && isPrevFreez){
             HeatAni();
         }
+        isPrevFreez= isFreez;
         
     }
 
