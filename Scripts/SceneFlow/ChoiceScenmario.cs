@@ -23,6 +23,7 @@ public class ChoiceScenario : MonoBehaviour
     private bool prevAniOver = false;
     public Animator anim;
     public Animator animMouse;
+    public Animator move;
     public bool animMouseDisable = true;
     public int startCount = 0;
     public int nextCount = 0;
@@ -66,7 +67,6 @@ public class ChoiceScenario : MonoBehaviour
     }
 
     public bool ConditionCheck(ConditionClass c){
-        c.AniOver();
 
         return c.GetState();
     }
@@ -80,6 +80,18 @@ public class ChoiceScenario : MonoBehaviour
             f.SetActivity(false);
         }
 
+    }
+    bool nowIsCondition(){
+        int count;
+        if(startCount != 0) count = scenarioFlowArr[startCount-1].nowScene.Count;
+        else return true;
+        Scene.Scenario s;
+        if(nextCount <=0 || (count < nextCount)) return true;
+        else{
+            s = scenarioFlowArr[startCount-1].nowScene.FlowArr[nextCount-1];
+            if(s.condition.Length == 0) return true;
+        }
+        return false;
     }
     bool ConditionChekcs(){
         bool chk = false;
@@ -115,7 +127,7 @@ public class ChoiceScenario : MonoBehaviour
 
     }
     void Update(){
-        if(aniOver && !prevAniOver){
+        if(aniOver && !prevAniOver && nowIsCondition()){
                 RunAni("next",++nextCount);
                 RunAni("start",0);
                 RunScene();
