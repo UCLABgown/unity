@@ -36,6 +36,8 @@ public class  EyeGazeObserver3D : MonoBehaviour
     [SerializeField]
     [Tooltip("GameObject containing RayReactor class.")]
     private Transform reactorParent;
+    [SerializeField]
+    private Transform[] insertReactor;
     private Camera observerCamera;
 
     private List<GameObject> reactorObjects; // ����Ʈ ���� game object �鸸 �ٿ�� �ڽ��� �׸��ų� �ü� Ž���� ������.   Only game object in the list can be detected by eye gazing and drawinig bounding box.
@@ -73,6 +75,12 @@ public class  EyeGazeObserver3D : MonoBehaviour
     void SetReactorObjects(){
         Getchild(reactorParent);
         foreach(Transform t in tArr){
+            RayReactor ray = t.GetComponent<RayReactor>();
+            if(ray != null){
+                rays.Add(ray);
+            }
+        }
+        foreach(Transform t in insertReactor){
             RayReactor ray = t.GetComponent<RayReactor>();
             if(ray != null){
                 rays.Add(ray);
