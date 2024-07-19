@@ -86,11 +86,13 @@ public class CSVWriter3DInsert : MonoBehaviour
             colnames3D.Add(colname);
         foreach (string colname in handObserver.GetColumn3DNames())
             colnames3D.Add(colname);
-        foreach (string colname in voiceObserver.GetColumnNames())
-            colnames3D.Add(colname);
-        foreach (string colname in sceneObserver.GetColumnNames())
-            colnames3D.Add(colname);
-        
+        if(!(voiceObserver is null))
+            foreach (string colname in voiceObserver.GetColumnNames())
+                colnames3D.Add(colname);
+        if(!(sceneObserver is null))
+            foreach (string colname in sceneObserver.GetColumnNames())
+                colnames3D.Add(colname);
+            
 
         csvData3D.Add(colnames3D.ToArray()); // column name
         isRecording = true;
@@ -116,6 +118,7 @@ public class CSVWriter3DInsert : MonoBehaviour
             colnames.Add(colname);
         foreach (string colname in handObserver.GetColumnNames())
             colnames.Add(colname);
+        if(!(voiceObserver is null))
         foreach (string colname in voiceObserver.GetColumnNames())
             colnames.Add(colname);
         foreach (string colname in sceneObserver.GetColumnNames())
@@ -131,7 +134,8 @@ public class CSVWriter3DInsert : MonoBehaviour
     private void FixedUpdate()
     {
         timer += Time.deltaTime;
-        tmp_Text.text= timer.ToString();
+        if(!(tmp_Text is null))
+            tmp_Text.text= timer.ToString();
         // Task�� �����ϰ� �ִ� �߿��� �����͸� ������.
         // Store data only the task is running.
         if (isRecording)
@@ -144,8 +148,10 @@ public class CSVWriter3DInsert : MonoBehaviour
             rowData.AddRange(headObserver.GetCSVData()); // head
             rowData.AddRange(faceObserver.GetCSVData()); // face
             rowData.AddRange(handObserver.GetCSVData()); // hand
-            rowData.AddRange(voiceObserver.GetCSVData());
-            rowData.AddRange(sceneObserver.GetCSVData());
+            if(!(voiceObserver is null))
+                rowData.AddRange(voiceObserver.GetCSVData());
+            if(!(sceneObserver is null))
+                rowData.AddRange(sceneObserver.GetCSVData());
             csvData.Add(rowData.ToArray());
 
 
@@ -155,8 +161,10 @@ public class CSVWriter3DInsert : MonoBehaviour
             rowData3D.AddRange(headObserver.GetCSVData()); // head
             rowData3D.AddRange(faceObserver.GetCSVData()); // face
             rowData3D.AddRange(handObserver.GetCSVData3D()); // hand
-            rowData3D.AddRange(voiceObserver.GetCSVData());
-            rowData3D.AddRange(sceneObserver.GetCSVData());
+            if(!(voiceObserver is null))
+                rowData3D.AddRange(voiceObserver.GetCSVData());
+            if(!(sceneObserver is null))
+                rowData3D.AddRange(sceneObserver.GetCSVData());
             csvData3D.Add(rowData3D.ToArray());
         }
     }
