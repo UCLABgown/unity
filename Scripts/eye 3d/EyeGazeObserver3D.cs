@@ -35,7 +35,7 @@ public class  EyeGazeObserver3D : MonoBehaviour
 
     [SerializeField]
     [Tooltip("GameObject containing RayReactor class.")]
-    private Transform reactorParent;
+    private Transform[] reactorParent;
     [SerializeField]
     private Transform[] insertReactor;
     private Camera observerCamera;
@@ -73,19 +73,22 @@ public class  EyeGazeObserver3D : MonoBehaviour
     }
 
     void SetReactorObjects(){
-        Getchild(reactorParent);
+        foreach(var t in reactorParent)
+            Getchild(t);
         foreach(Transform t in tArr){
             RayReactor ray = t.GetComponent<RayReactor>();
             if(ray != null){
                 rays.Add(ray);
             }
         }
+        /*
         foreach(Transform t in insertReactor){
             RayReactor ray = t.GetComponent<RayReactor>();
             if(ray != null){
                 rays.Add(ray);
             }
         }
+        */
     }
 
 
@@ -176,6 +179,10 @@ public class  EyeGazeObserver3D : MonoBehaviour
              i++;
         }
         return arr;
+    }
+
+    public string GetSightObJ(){
+        return faceExpressions.ValidExpressions ? faceExpressions.GetWeight(FE.EyesClosedL).ToString() : "0";
     }
 /*
     public void CalParticleRect(){
