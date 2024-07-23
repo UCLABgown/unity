@@ -19,7 +19,6 @@ public class ShareBlendShapes : MonoBehaviour
         
         foreach (var r in arr){
             for(int i = 0; i<shapeCount ; i++){
-                print(i) ;
                 r.SetBlendShapeWeight(i,me.GetBlendShapeWeight(i));
             }
         }

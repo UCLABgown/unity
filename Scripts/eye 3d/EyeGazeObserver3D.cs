@@ -53,7 +53,7 @@ public class  EyeGazeObserver3D : MonoBehaviour
 
     private GUIStyle timerStyle; // Timer gui style
     List<RayReactor> rayList = new List<RayReactor>();
-    List<Renderer> renderList = new List<Renderer>();
+    List<Collider> renderList = new List<Collider>();
 
     List<Rect> particleRectArr = new List<Rect>();
 
@@ -105,7 +105,7 @@ public class  EyeGazeObserver3D : MonoBehaviour
         foreach (var reactorObject in rays)
         {
             RayReactor r = reactorObject.GetComponent<RayReactor>();
-            Renderer render = reactorObject.GetComponent<Renderer>();
+            Collider render = reactorObject.GetComponent<Collider>();
             rayList.Add(r);
             renderList.Add(render);
             colnames.Add(r.objectName + "_top_left_x");
@@ -157,7 +157,7 @@ public class  EyeGazeObserver3D : MonoBehaviour
 
     public List<Rect> GetObjtArr(){
         List<Rect> arr = new List<Rect>();
-        foreach (Renderer reactorObject in renderList){
+        foreach (Collider reactorObject in renderList){
             Vector3 screenPointOfObjectCenter = observerCamera.WorldToScreenPoint(reactorObject.bounds.center);
 
              if (screenPointOfObjectCenter.z > 0){
@@ -170,7 +170,7 @@ public class  EyeGazeObserver3D : MonoBehaviour
     public List<string> GetObjNameArr(){
         List<string>  arr = new List<string>();
         int i = 0;
-        foreach (Renderer reactorObject in renderList){
+        foreach (Collider reactorObject in renderList){
             Vector3 screenPointOfObjectCenter = observerCamera.WorldToScreenPoint(reactorObject.bounds.center);
 
              if ((screenPointOfObjectCenter.z > 0) && reactorObject.gameObject.active){
@@ -182,7 +182,7 @@ public class  EyeGazeObserver3D : MonoBehaviour
     }
 
     public string GetSightObJ(){
-        return faceExpressions.ValidExpressions ? faceExpressions.GetWeight(FE.EyesClosedL).ToString() : "0";
+        return  eyeRaycaster.HitObject;
     }
 /*
     public void CalParticleRect(){
@@ -243,7 +243,7 @@ public class  EyeGazeObserver3D : MonoBehaviour
         // reactorObjects�� �߰��� ������Ʈ�� �ϳ��� ��ȸ�ϸ� �ش� ������Ʈ�� ���� �ִ��� Ȯ���ϰ� �ٿ�� �ڽ� ���� ����.
         // Check each object whether user is gazing on object and if it does, save and draw bounding box information.
         int forCount = renderList.Count;
-        
+        Transform a ;
         for(int i =0; i<forCount; i++){
             Vector3 screenPointOfObjectCenter = observerCamera.WorldToScreenPoint(renderList[i].bounds.center);
             Rect screenRectForObject = WorldObjectToScreenRect(renderList[i].gameObject); // ��ü ��ġ.   Location of the object.

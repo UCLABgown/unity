@@ -26,7 +26,6 @@ public class ZoomCondition : ConditionClass
         Vector3 vDist = v1-target;
         Vector3 vDir = vDist .normalized;
         float fDist = vDist.magnitude;
-        print(fDist);
         if(fDist < 0.07f){
             num ++;
         }
@@ -35,7 +34,6 @@ public class ZoomCondition : ConditionClass
     }
     public override void AniStart(){
         isStart  = true;
-        print("시작");
     }
     void Update(){
         if(isStart){

@@ -57,6 +57,24 @@ public class HandObserver3D : MonoBehaviour
         screenWidth = observerCamera.pixelWidth;
         screentHeight = observerCamera.pixelHeight;
     }
+    public string getRightHandHoldingName(){
+        if (!rHand.IsConnected || !rightHandInteractor.IsGrabbing ) return "None";
+        if( (rightHandInteractor.SelectedInteractable.GetComponent<RayReactor>() is null))
+            return rHand.IsConnected && rightHandInteractor.IsGrabbing ? rightHandInteractor.SelectedInteractable.transform.parent.GetComponent<RayReactor>().objectName : "None";
+        else
+            return rHand.IsConnected && rightHandInteractor.IsGrabbing ? rightHandInteractor.SelectedInteractable.GetComponent<RayReactor>().objectName : "None";
+
+    }
+
+    public string getLeftHandHoldingName(){
+        if (!lHand.IsConnected || !leftHandInteractor.IsGrabbing ) return "None";
+
+        if((leftHandInteractor.SelectedInteractable.GetComponent<RayReactor>() is null))
+            return lHand.IsConnected && leftHandInteractor.IsGrabbing ? leftHandInteractor.SelectedInteractable.transform.parent.GetComponent<RayReactor>().objectName : "None";
+        else
+            return lHand.IsConnected && leftHandInteractor.IsGrabbing ? leftHandInteractor.SelectedInteractable.GetComponent<RayReactor>().objectName : "None";
+
+    }
 
     public Vector2 GetLeftHandPoint(){
         return WorldPointToScreenPoint(leftHand.transform.position);
@@ -98,9 +116,17 @@ public class HandObserver3D : MonoBehaviour
         csvData[1] = lHand.IsConnected ? (screenLeftHandPoint.y / screentHeight).ToString() : "0.0";
         csvData[2] = rHand.IsConnected ? (screenRightHandPoint.x / screenWidth).ToString() : "0.0";
         csvData[3] = rHand.IsConnected ? (screenRightHandPoint.y / screentHeight).ToString() : "0.0";
-        csvData[4] = lHand.IsConnected && leftHandInteractor.IsGrabbing ? leftHandInteractor.SelectedInteractable.GetComponent<RayReactor>().objectName: "None"; // ���ʼ��� ��� �ִ� ������Ʈ �̸�.  Object name which is holding by user's left hand.
+        if( (lHand.IsConnected && leftHandInteractor.IsGrabbing ) && (leftHandInteractor.SelectedInteractable.GetComponent<RayReactor>() is null))
+            csvData[4] = lHand.IsConnected && leftHandInteractor.IsGrabbing ? leftHandInteractor.SelectedInteractable.transform.parent.GetComponent<RayReactor>().objectName: "None"; // ���ʼ��� ��� �ִ� ������Ʈ �̸�.  Object name which is holding by user's left hand.
+        else
+            csvData[4] = lHand.IsConnected && leftHandInteractor.IsGrabbing ? leftHandInteractor.SelectedInteractable.GetComponent<RayReactor>().objectName: "None"; // ���ʼ��� ��� �ִ� ������Ʈ �̸�.  Object name which is holding by user's left hand.
+
         csvData[5] = lHand.IsConnected && leftHandInteractor.IsGrabbing ? leftHandInteractor.HandGrabTarget.Anchor.ToString() : "None"; // ���ʼ��� � ������Ʈ�� ������� ��, �ش�Ǵ� ����ó Ÿ��.  Gesture type if user's left hand is holding some object.
-        csvData[6] = rHand.IsConnected && rightHandInteractor.IsGrabbing ? rightHandInteractor.SelectedInteractable.GetComponent<RayReactor>().objectName : "None"; // �����ʼ��� ��� �ִ� ������Ʈ �̸�.  Object name which is holding by user's right hand.
+        if((rHand.IsConnected && rightHandInteractor.IsGrabbing)  &&  (rightHandInteractor.SelectedInteractable.GetComponent<RayReactor>() is null))
+            csvData[6] = rHand.IsConnected && rightHandInteractor.IsGrabbing ? rightHandInteractor.SelectedInteractable.transform.parent.GetComponent<RayReactor>().objectName : "None"; // �����ʼ��� ��� �ִ� ������Ʈ �̸�.  Object name which is holding by user's right hand.
+        else
+            csvData[6] = rHand.IsConnected && rightHandInteractor.IsGrabbing ? rightHandInteractor.SelectedInteractable.GetComponent<RayReactor>().objectName : "None"; // �����ʼ��� ��� �ִ� ������Ʈ �̸�.  Object name which is holding by user's right hand.
+
         csvData[7] = rHand.IsConnected && rightHandInteractor.IsGrabbing ? rightHandInteractor.HandGrabTarget.Anchor.ToString() : "None"; // �����ʼ��� � ������Ʈ�� ������� ��, �ش�Ǵ� ����ó Ÿ��.  Gesture type if user's right hand is holding some object.
     
     
@@ -111,10 +137,17 @@ public class HandObserver3D : MonoBehaviour
         csvData3D[3] = rHand.IsConnected ? screenRightHand3DPoint.x.ToString() : "0.0";
         csvData3D[4] = rHand.IsConnected ? screenRightHand3DPoint.y.ToString() : "0.0";
         csvData3D[5] = rHand.IsConnected ? screenRightHand3DPoint.z.ToString() : "0.0";
+        if( (lHand.IsConnected && leftHandInteractor.IsGrabbing ) && (leftHandInteractor.SelectedInteractable.GetComponent<RayReactor>() is null))
+            csvData3D[6] = lHand.IsConnected && leftHandInteractor.IsGrabbing ? leftHandInteractor.SelectedInteractable.transform.parent.GetComponent<RayReactor>().objectName : "None"; // ���ʼ��� ��� �ִ� ������Ʈ �̸�.  Object name which is holding by user's left hand.
+        else
+            csvData3D[6] = lHand.IsConnected && leftHandInteractor.IsGrabbing ? leftHandInteractor.SelectedInteractable.GetComponent<RayReactor>().objectName : "None"; // ���ʼ��� ��� �ִ� ������Ʈ �̸�.  Object name which is holding by user's left hand.
 
-        csvData3D[6] = lHand.IsConnected && leftHandInteractor.IsGrabbing ? leftHandInteractor.SelectedInteractable.GetComponent<RayReactor>().objectName : "None"; // ���ʼ��� ��� �ִ� ������Ʈ �̸�.  Object name which is holding by user's left hand.
         csvData3D[7] = lHand.IsConnected && leftHandInteractor.IsGrabbing ? leftHandInteractor.HandGrabTarget.Anchor.ToString() : "None"; // ���ʼ��� � ������Ʈ�� ������� ��, �ش�Ǵ� ����ó Ÿ��.  Gesture type if user's left hand is holding some object.
-        csvData3D[8] = rHand.IsConnected && rightHandInteractor.IsGrabbing ? rightHandInteractor.SelectedInteractable.GetComponent<RayReactor>().objectName : "None"; // �����ʼ��� ��� �ִ� ������Ʈ �̸�.  Object name which is holding by user's right hand.
+        if((rHand.IsConnected && rightHandInteractor.IsGrabbing)  &&  (rightHandInteractor.SelectedInteractable.GetComponent<RayReactor>() is null))
+            csvData3D[8] = rHand.IsConnected && rightHandInteractor.IsGrabbing ? rightHandInteractor.SelectedInteractable.transform.parent.GetComponent<RayReactor>().objectName : "None"; // �����ʼ��� ��� �ִ� ������Ʈ �̸�.  Object name which is holding by user's right hand.
+        else
+            csvData3D[8] = rHand.IsConnected && rightHandInteractor.IsGrabbing ? rightHandInteractor.SelectedInteractable.GetComponent<RayReactor>().objectName : "None"; // �����ʼ��� ��� �ִ� ������Ʈ �̸�.  Object name which is holding by user's right hand.
+
         csvData3D[9] = rHand.IsConnected && rightHandInteractor.IsGrabbing ? rightHandInteractor.HandGrabTarget.Anchor.ToString() : "None"; // �����ʼ��� � ������Ʈ�� ������� ��, �ش�Ǵ� ����ó Ÿ��.  Gesture type if user's right hand is holding some object.
     
     }

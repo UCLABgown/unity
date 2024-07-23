@@ -19,13 +19,15 @@ public class DisableTracking : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rightHold = ob.getRightHandHoldingName(); leftHold = ob.getLeftHandHoldingName();
+        if(ob.enabled){
+            rightHold = ob.getRightHandHoldingName(); leftHold = ob.getLeftHandHoldingName();
 
-        if (rightHold == leftHold){
-            GetComponent<SampleAvatarEntity>().SetBodyTracking(originalAvatarSdk);
-        }
-        else if ((rightHold == "None") | (leftHold == "None")){
-            GetComponent<SampleAvatarEntity>().SetBodyTracking(origianlHandTracking);
+            if (rightHold == leftHold){
+                GetComponent<SampleAvatarEntity>().SetBodyTracking(originalAvatarSdk);
+            }
+            else if ((rightHold == "None") | (leftHold == "None")){
+                GetComponent<SampleAvatarEntity>().SetBodyTracking(origianlHandTracking);
+            }
         }
     }
 }

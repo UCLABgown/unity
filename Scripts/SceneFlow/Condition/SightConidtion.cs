@@ -6,7 +6,6 @@ public class SightCOnidtion : ConditionClass
 {
     public EyeGazeObserver3D eyeGazeObserver3D;
     public float limitTime;
-    private float time;
     private string saveObj;
     private bool isStart = false;
     // Start is called before the first frame update
@@ -21,19 +20,20 @@ public class SightCOnidtion : ConditionClass
     // Update is called once per frame
     void Update()
     { 
-        if(isStart){
+        //if(isStart){
             string obj = eyeGazeObserver3D.GetSightObJ();
             if(obj != "0"){
                 if(saveObj == obj){
                     time += Time.deltaTime;
+                    print(time);
                     if(time > limitTime){
-                        state = true;
-                        gameObject.active = false;
+                        SetState(true);
+                        this.enabled = false;
                     }
-                else time = 0;
                 saveObj = obj;
                 }
+                else time = 0;
             }
-        }
+        //}
     }
 }

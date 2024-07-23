@@ -11,9 +11,8 @@ public class FlowHeader : MonoBehaviour
     public bool activity = false;
     bool prevActivity = false;
     bool state = false;
+    public bool isTele = true;
 
-
-    public bool isTel = false;
     private double time = 0f;
     public Transform area;
     private float squareSize; // 정사각형의 한 변의 길이
@@ -37,7 +36,7 @@ public class FlowHeader : MonoBehaviour
     }
 
     void Start(){
-        if(isTel){
+        if(isTele ){
         squareSize = area.localScale.x;
         squareCenter = area.position;
         movePosition = Tomove.position;
@@ -48,7 +47,7 @@ public class FlowHeader : MonoBehaviour
         if(activity && !prevActivity)
             state = true;
         prevActivity = activity;
-        if(isTel){
+        if(isTele ){
             time= time + Time.deltaTime;
 
             if(time > 1){
@@ -59,6 +58,7 @@ public class FlowHeader : MonoBehaviour
                 // 정사각형 영역의 경계를 계산
                 Vector3 squareMin = squareCenter - Vector3.one * squareSize / 2;
                 Vector3 squareMax = squareCenter + Vector3.one * squareSize / 2;
+                print(squareMax);
 
                 // 물체가 정사각형 안에 있는지 확인
                 if (objectPosition.x >= squareMin.x && objectPosition.x <= squareMax.x &&

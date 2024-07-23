@@ -26,7 +26,6 @@ public class MovingCondition : ConditionClass
         Vector3 vDist = v1-target;
         Vector3 vDir = vDist .normalized;
         float fDist = vDist.magnitude;
-        print(fDist);
         if(fDist < 0.07f){
             num ++;
         }

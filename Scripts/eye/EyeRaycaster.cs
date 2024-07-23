@@ -64,8 +64,9 @@ public class EyeRaycaster : MonoBehaviour
             RayReactor r = hit.collider.GetComponent<RayReactor>();
             if(r is null)
                 hitObject = "None";
-            else
+            else{
                 hitObject = r.objectName;
+            }
         }
         if (Physics.Raycast(rightEye.position, rightEyeGazingDirection, out hit, Mathf.Infinity, layersToInclude)) // right eye
             rightGazingPoint = hit.point;

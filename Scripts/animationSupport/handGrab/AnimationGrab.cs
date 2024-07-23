@@ -18,6 +18,7 @@ public class AnimationGrab : MonoBehaviour
     public Vector3 addPosition;
     public Quaternion addRotate;
     private bool isPrevFreez = false;
+    public bool isBreak = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,8 @@ public class AnimationGrab : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other) {
-        if(other.name.Contains("ColliderDetect") && isTouch){
+
+        if(other.name.Contains("ColliderDetect") && isTouch && isBreak){
 
             Joint j = this.GetComponent<FixedJoint>();
             if(j != null){
