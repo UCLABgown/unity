@@ -12,14 +12,22 @@ public class BlindCondition : ConditionClass
     private int num = 0;
     public Transform fromMove;
     public Transform  toMove;
+    public float rotate;
+    
     public override void AniStart(){
+        gameObject.active = true;
         isStart  = true;
+    }
+    public override void AniOver(){
+        isStart  = false;
+        gameObject.active = false;
+        print("isover");
     }
     // Start is called before the first frame update
     void Start()
     {
         frameColor = 1/(fadeTime*60);
-        blind.enabled = false;
+        gameObject.active = false;
         blind.material.color = new Color(255,0,0,0);
     }
     void fade(float n){
@@ -31,7 +39,7 @@ public class BlindCondition : ConditionClass
         if(isStart ){
             switch(now){
                 case 0 :
-                    blind.enabled = true;
+                    gameObject.active = true;
                     now++;
                     break;
                 case 1:
@@ -40,8 +48,10 @@ public class BlindCondition : ConditionClass
                     break;
                 case 2:
                     Vector3 save= toMove.position;
+                    Quaternion q = Quaternion.Euler(0,rotate,0);
                     save.y = fromMove.position.y;
                     fromMove.position = save;
+                    fromMove.rotation = q;
                     now++;
                     break;
                 case 3:
@@ -50,7 +60,7 @@ public class BlindCondition : ConditionClass
                     break;
                 case 4:
                     state = true;
-                    blind.enabled = false;
+                    gameObject.active= false;
                     break;
             }
         }
