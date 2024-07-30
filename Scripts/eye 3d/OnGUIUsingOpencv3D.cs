@@ -74,8 +74,8 @@ public class OnGUIUsingOpencv3D : MonoBehaviour
     public bool is60fps;
     public bool isimage;
     public RenderTexture m_MirrorRenderTexture;
-    
-        private void run30fps(){
+    /*
+    private void run30fps(){
         if(isPass){
             Recodrding(toTexture2D());
         }
@@ -86,6 +86,7 @@ public class OnGUIUsingOpencv3D : MonoBehaviour
         Recodrding(toTexture2D());
 
     }
+    */
 
     private void runimg30fps(){
         if(isPass){
@@ -101,12 +102,12 @@ public class OnGUIUsingOpencv3D : MonoBehaviour
     void Start(){
         if(is60fps){
             frameRate = 50;
-            run = run60fps;
+            //run = run60fps;
             if(isimage) run = runimg60fps;
         }
         else{
             frameRate = 25;
-            run = run30fps;
+            //run = run30fps;
             if(isimage)run = runimg30fps;
         }
         screenWidth = m_MirrorRenderTexture.width;
@@ -115,8 +116,8 @@ public class OnGUIUsingOpencv3D : MonoBehaviour
         imagePaht = "./Data/"+DateTime.Now.ToString("yyyy-MM-dd-HH-ss\\hmm\\m");
         Directory.CreateDirectory(imagePaht );
         if(!isimage){
-        writer = new VideoWriter();
-		writer.open(persistentDataPath , Videoio.CAP_OPENCV_MJPEG, VideoWriter.fourcc('M', 'J', 'P', 'G'), frameRate, new Size((int)screenWidth, (int)screenHeight));
+        //writer = new VideoWriter();
+		//writer.open(persistentDataPath , Videoio.CAP_OPENCV_MJPEG, VideoWriter.fourcc('M', 'J', 'P', 'G'), frameRate, new Size((int)screenWidth, (int)screenHeight));
         }
         //encoderThread = new Thread (VideoSave);
         isPass = true;
@@ -135,19 +136,18 @@ public class OnGUIUsingOpencv3D : MonoBehaviour
         RenderTexture.active = m_MirrorRenderTexture;
         texture.ReadPixels(new UnityEngine.Rect(0, 0, m_MirrorRenderTexture.width, m_MirrorRenderTexture.height), 0, 0);
         texture.Apply();
-    
 
         return texture;
     }
 
-    private void Recodrding(Texture2D texture){
+    /*private void Recodrding(Texture2D texture){
             Mat imgMat = new Mat(screenHeight, screenWidth, CvType.CV_8UC4);
 
             Utils.texture2DToMat(texture, imgMat);
             imgMat = DrawGUI(imgMat);
             writer.write(imgMat);
             imgMat.release();
-    }
+    }*/
     private void ImageSave(Texture2D texture){
             Mat imgMat = new Mat(screenHeight, screenWidth, CvType.CV_8UC4);
 
@@ -156,8 +156,7 @@ public class OnGUIUsingOpencv3D : MonoBehaviour
             //writer.write(imgMat);
             Imgcodecs.imwrite(imagePaht+"/"+count+++".jpg", imgMat);  
             imgMat.release();
-            texture.ClearMinimumMipmapLevel();
-            texture.ClearRequestedMipmapLevel();
+            Destroy(texture);
     }
 
     /*private void VideoSave(){

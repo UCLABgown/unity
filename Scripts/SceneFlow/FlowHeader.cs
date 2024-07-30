@@ -58,7 +58,6 @@ public class FlowHeader : MonoBehaviour
                 // 정사각형 영역의 경계를 계산
                 Vector3 squareMin = squareCenter - Vector3.one * squareSize / 2;
                 Vector3 squareMax = squareCenter + Vector3.one * squareSize / 2;
-                print(squareMax);
 
                 // 물체가 정사각형 안에 있는지 확인
                 if (objectPosition.x >= squareMin.x && objectPosition.x <= squareMax.x &&

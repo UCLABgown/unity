@@ -103,7 +103,9 @@ public class ChoiceScenario : MonoBehaviour
         else{
             s = scenarioFlowArr[startCount-1].nowScene.FlowArr[nextCount-1];
         foreach(ConditionClass c in s.condition){
+            bool b = ConditionCheck(c);
             chk = chk || ConditionCheck(c);
+            if(b)print("조건맞아서 넘어감");
         }
         } 
         return chk;
