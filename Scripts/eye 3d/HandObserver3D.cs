@@ -92,6 +92,14 @@ public class HandObserver3D : MonoBehaviour
         return rightHand.transform.position;
     }
 
+    public bool getLeftGrabbingStatus(){
+        return leftHandInteractor.IsGrabbing;
+    }
+
+    public bool getRightGrabbingStatus(){
+        return rightHandInteractor.IsGrabbing;
+    }
+
 
     private void OnGUI()
     {
