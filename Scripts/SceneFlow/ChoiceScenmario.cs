@@ -8,6 +8,7 @@ using TMPro;
 public class ChoiceScenario : MonoBehaviour
 {
     public int scenarioCount = 0;
+    public string currentName = "";
     [Serializable]
     public struct Scenario{
         public string num;
@@ -33,6 +34,9 @@ public class ChoiceScenario : MonoBehaviour
 
     float time = 0;
     
+    public void FirstAniStart(){
+        anim.SetInteger("first",1);
+    }
     public void RunAudio(AudioClip ac){
         StopAudio();
         audio.PlayOneShot(ac);
@@ -64,6 +68,29 @@ public class ChoiceScenario : MonoBehaviour
             c.Init();
     }
 
+    }
+    public void PassScene(){
+        string name = anim.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+        if(name != prevName){
+            if(name.Contains(centerName)){
+                RunAni("start",++startCount);
+                RunAni("next",0);
+                nextCount = 0;
+            }
+            else{
+                RunAni("next",++nextCount);
+                RunAni("start",0);
+                RunScene();
+                isRun = false;
+            }
+        }
+        else{
+            RunAni("next",++nextCount);
+            RunAni("start",0);
+            RunScene();
+            isRun = false;
+        }
+        prevName = name;
     }
 
     public bool ConditionCheck(ConditionClass c){
@@ -115,6 +142,7 @@ public class ChoiceScenario : MonoBehaviour
         if(scenarioFlowArr[startCount-1].nowScene.Count < nextCount)
             return;
         Scene.Scenario s = scenarioFlowArr[startCount-1].nowScene.FlowArr[nextCount-1];
+        currentName = s.name;
         ConditionInit(s.condition);
         SetBoxInput(s);
         RunAudio(s.audio);
