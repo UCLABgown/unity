@@ -17,23 +17,28 @@ public class SightCOnidtion : ConditionClass
     public override void AniStart(){
         isStart  = true;
             }
+        public override void AniOver(){
+        isStart  = true;
+            }
+    
     // Update is called once per frame
     void Update()
     { 
-        //if(isStart){
+        if(isStart){
             string obj = eyeGazeObserver3D.GetSightObJ();
+            print(obj);
             if(obj != "0"){
+
                 if(saveObj == obj){
                     time += Time.deltaTime;
-                    print(time);
                     if(time > limitTime){
                         SetState(true);
                         this.enabled = false;
                     }
-                saveObj = obj;
                 }
                 else time = 0;
+                saveObj = obj;
             }
-        //}
+        }
     }
 }

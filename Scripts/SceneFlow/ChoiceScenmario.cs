@@ -7,12 +7,12 @@ using TMPro;
 
 public class ChoiceScenario : MonoBehaviour
 {
-    public int scenarioCount = 0;
+    public int startCount = 0;
     public string currentName = "";
     [Serializable]
     public struct Scenario{
         public string num;
-        public Scene nowScene;
+        public SceneSS nowScene;
    }
 
 
@@ -26,7 +26,6 @@ public class ChoiceScenario : MonoBehaviour
     public Animator animMouse;
     public Animator move;
     public bool animMouseDisable = true;
-    public int startCount = 0;
     public int nextCount = 0;
     public AudioSource audio;
     private bool isRun = false;
@@ -97,7 +96,7 @@ public class ChoiceScenario : MonoBehaviour
 
         return c.GetState();
     }
-    void SetBoxInput(Scene.Scenario s){
+    void SetBoxInput(SceneSS.Scenario s){
         if(s.boxInputAble.Length >0)
         foreach(FlowHeader f in s.boxInputAble){
             f.SetActivity(true);
@@ -112,7 +111,7 @@ public class ChoiceScenario : MonoBehaviour
         int count;
         if(startCount != 0) count = scenarioFlowArr[startCount-1].nowScene.Count;
         else return true;
-        Scene.Scenario s;
+        SceneSS.Scenario s;
         if(nextCount <=0 || (count < nextCount)) return true;
         else{
             s = scenarioFlowArr[startCount-1].nowScene.FlowArr[nextCount-1];
@@ -125,7 +124,7 @@ public class ChoiceScenario : MonoBehaviour
         int count  = 0;
         if(startCount != 0) count = scenarioFlowArr[startCount-1].nowScene.Count;
         else return false;
-        Scene.Scenario s;
+        SceneSS.Scenario s;
         if(nextCount <=0 || (count < nextCount)) ;
         else{
             s = scenarioFlowArr[startCount-1].nowScene.FlowArr[nextCount-1];
@@ -141,7 +140,7 @@ public class ChoiceScenario : MonoBehaviour
     void RunScene(){
         if(scenarioFlowArr[startCount-1].nowScene.Count < nextCount)
             return;
-        Scene.Scenario s = scenarioFlowArr[startCount-1].nowScene.FlowArr[nextCount-1];
+        SceneSS.Scenario s = scenarioFlowArr[startCount-1].nowScene.FlowArr[nextCount-1];
         currentName = s.name;
         ConditionInit(s.condition);
         SetBoxInput(s);

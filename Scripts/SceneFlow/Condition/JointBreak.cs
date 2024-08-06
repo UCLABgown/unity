@@ -6,7 +6,9 @@ using UnityEngine;
 public class JointBreak : ConditionClass
 {
     public GameObject jointObject;
+    public AnimationGrabVer2 grab;
     private Joint j;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,12 +17,11 @@ public class JointBreak : ConditionClass
     // Update is called once per frame
     void Update()
     {
-        j = jointObject.GetComponent<FixedJoint>();
-        if(j == null){
+        if(grab.Getstate())
              SetState(true);
-        }
-        else{
+        
+        else
              SetState(false);
-        }
+        
     }
 }

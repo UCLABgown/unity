@@ -20,6 +20,7 @@ public class AnimationGrabVer2 : MonoBehaviour
     public Quaternion addRotate;
     private bool isPrevFreez = false;
     public string sceneControllName = "Pose_2_pointing_re";
+    private bool state = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,10 +36,14 @@ public class AnimationGrabVer2 : MonoBehaviour
                 Destroy(j);
                 this.GetComponent<Rigidbody>().drag =90;
                 dragInt = 35;
-
+                holdstop= true;
+                state = true;
 
             }
         }
+    }
+    public bool Getstate(){
+        return state;;
     }
     void FreezAni(){
         GameObject g = GameObject.Find(sceneControllName);
@@ -53,11 +58,11 @@ public class AnimationGrabVer2 : MonoBehaviour
     {
 
         if(savehold != ishold){
-                if(ishold){
+                if(ishold && !holdstop){
                     if(isAutoFreez) isFreez = true;
                     transform.position = holdHand.transform.position + addPosition;
                     transform.rotation = holdHand.transform.rotation * addRotate;                    
-                Joint j = this.AddComponent<FixedJoint>();
+                    Joint j = this.AddComponent<FixedJoint>();
                     j.connectedBody = holdHand;
                     j.breakForce = Mathf.Infinity;
 

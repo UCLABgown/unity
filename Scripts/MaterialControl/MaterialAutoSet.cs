@@ -74,6 +74,9 @@ public class MaterialAutoSet : MonoBehaviour
         isIncrease = isIncrease_;
     }
     void DisIn(){
+        if(isIncrease) InDecrease(-0.99f);
+        else InDecrease(0.99f);
+        /*
         time = time + Time.deltaTime;
         if(time > delay){
             if(isIncrease){
@@ -96,6 +99,7 @@ public class MaterialAutoSet : MonoBehaviour
            
             time = 0;
         }
+        */
     }
     void Update(){
         if(run)

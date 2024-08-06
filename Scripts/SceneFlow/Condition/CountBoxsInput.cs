@@ -22,6 +22,7 @@ public class CountBoxsInput : ConditionClass
             n = n +b.GetCount();
             if(n >= maxCounts)
                 SetState(true);
+            print(n);
         }
     }
 }
